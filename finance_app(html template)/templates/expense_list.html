@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense List</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Expense List</h1>
+    <table>
+        <tr>
+            <th>Expense ID</th>
+            <th>Expense Name</th>
+            <th>Expense Amount</th>
+            <th>Expense Date</th>
+            <th>Expense Category</th>
+            <th>Expense Description</th>
+        </tr>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.expense_id }}</td>
+            <td>{{ expense.expense_name }}</td>
+            <td>{{ expense.expense_amount }}</td>
+            <td>{{ expense.expense_date }}</td>
+            <td>{{ expense.expense_category }}</td>
+            <td>{{ expense.expense_description }}</td>
+        </tr>
+        {% endfor %}
+</body>
+</html>
