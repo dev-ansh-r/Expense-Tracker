@@ -1,29 +1,127 @@
+{% load static %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Expense List</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
+
 <body>
-    <h1>Expense List</h1>
+    <h2>Add New Expense</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Expense Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label for="amount">Expense Amount:</label>
+        <input type="number" name="amount" required><br>
+
+        <label for="date">Expense Date</label>
+        <input type="date" name="date" required><br><br>
+
+        <label for="description">Expense Description</label>
+        <textarea name="description"></textarea><br>
+
+        <button class="button" type="submit">Add Expense</button>
+    </form>
+    <h2>Expense List</h2>
     <table>
         <tr>
             <th>Expense ID</th>
             <th>Expense Name</th>
             <th>Expense Amount</th>
             <th>Expense Date</th>
-            <th>Expense Category</th>
             <th>Expense Description</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
         {% for expense in expenses %}
         <tr>
-            <td>{{ expense.expense_id }}</td>
-            <td>{{ expense.expense_name }}</td>
-            <td>{{ expense.expense_amount }}</td>
-            <td>{{ expense.expense_date }}</td>
-            <td>{{ expense.expense_category }}</td>
-            <td>{{ expense.expense_description }}</td>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.description }}</td>
+            <td><button class="btn btn-sm btn-info" data-toggle="modal" data-target="#updateModal">
+                    Update
+                </button>
+            </td>
+            <!-- The Modal -->
+            <div class="modal fade" id="updateModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update the Expense</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form method="post" action="{% url 'expense-update' pk=expense.id %}">
+                                {% csrf_token %}
+                                <label for="name">Expense Name:</label>
+                                <input type="text" name="name" required><br>
+
+                                <label for="amount">Expense Amount:</label>
+                                <input type="number" name="amount" required><br>
+
+                                <label for="date">Expense Date</label>
+                                <input type="date" name="date" required><br><br>
+
+                                <label for="description">Expense Description</label>
+                                <textarea name="description"></textarea><br>
+
+                                <button class="button" type="submit">Update Expense</button>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </td>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Delete Expense</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete the expense "{{ expense.name }}"?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form method="post" action="{% url 'expense-delete' pk=expense.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </tr>
+
         {% endfor %}
+    </table>
 </body>
+
 </html>
+```
