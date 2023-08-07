@@ -1,2 +1,0 @@
-[deployment]
-prebuild = "python manage.py collectstatic"
