@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-vj30a_(rir32y%38g9jz*u@)iga=78s%6!%jfob-vm7d1_h$x4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['expensestodoist-production.up.railway.app','localhost']
+ALLOWED_HOSTS = ['expensestodoist-production.up.railway.app','localhost','expense-tracker-production-a000.up.railway.app']
 
 # Application definition
 
