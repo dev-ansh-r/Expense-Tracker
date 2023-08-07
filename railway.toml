@@ -1,2 +1,2 @@
 [deployment]
-prebuild = "python manage.py collectstatic --noinput"
+prebuild = "python manage.py collectstatic"
